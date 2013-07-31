@@ -1,0 +1,322 @@
+<?php
+$con=mysqli_connect("localhost","root","1112","rajasthan");
+
+if($_POST) {
+	$output = "";
+	
+	$address=$_POST["address"];
+	$name=$_POST["Kiosk_name"];  
+	$contact=$_POST["ph_no."];
+	$mail=$_POST["mail-id"];
+	$sql="INSERT INTO state (village,address,kiosk_name,ph_no.,mail-id)
+         VALUES ('$village','$address','$name','$contact','$mail')";
+
+mysqli_query($con,$sql);
+
+
+
+
+	$sql="SELECT * FROM states WHERE address=$address";
+	
+ $result= mysqli_query($con,$sql);    
+
+while($row = mysqli_fetch_array($result))
+{
+	
+	if($address==$row['address'])
+	{
+			$var++;
+if($var==1) {
+
+				
+	$output .=  "<table class='CSC INFO'>";
+	
+	
+	/* $output .= "<div class='field-right>" . $row['name'] . "</div>"; */
+	$output .=  "<th>Address</th>";
+	$output .=  "<th>Kiosk Name</th>";
+	$output .=  "<th>Contact No.</th>";
+	/*  $output .= "<div class='field-right>" . $row['bg'] . "</div>"; */
+	$output .=  "<th>e-Mail</th>";
+	/* $output .= "<div class='field-right>" . $row['contact'] . "</div>"; */
+	 
+ 
+ 
+ 
+}
+  $output .= "<tr>";
+ 
+  $output .= "<td align='center'>" . $row['address'] . "</td>";
+  $output .= "<td align='center'>" . $row['kiosk_name'] . "</td>";
+  $output .= "<td align='center'>" . $row['ph_no.'] . "</td>";
+  $output .= "<td align='center'>" . $row['mai-id'] . "</td>";
+  
+  
+  
+  
+ }
+	
+
+$output .= "</table>";
+	
+	}
+	/* $output .= "</table>"; */
+				if($var==0) {
+										
+					$output .= "Sorry no data  is available for your csc :( ";
+					}
+
+}
+
+?>
+
+
+
+
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medi-Friend</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700" rel="stylesheet" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+			<link rel="stylesheet" href="css/bootstrap-responsive.css" />
+		</noscript>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<!-- HTML5 shim for IE backwards compatibility -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <!--Form Validation-->
+    <script type="text/javascript"> 
+    
+function validateForm(){
+ 
+  var vmail = document.getElementById('mail-id');
+  var vname = document.getElementById('kiosk_name');
+  var vaddress = document.getElementById('address');
+ 
+  var cnct = document.getElementById('ph_no.');
+
+  var x=document.forms["register"]["submit"].value;
+  
+ // function for mail-id
+//<script language = "Javascript">
+function echeck(str) {
+
+		var at="@"
+		var dot="."
+		var lat=str.indexOf(at)
+		var lstr=str.length
+		var ldot=str.indexOf(dot)
+		if (str.indexOf(at)==-1){
+		   alert("Invalid E-mail ID")
+		   return false
+		}
+
+		if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+		   alert("Invalid E-mail ID")
+		   return false
+		}
+
+		if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+		    alert("Invalid E-mail ID")
+		    return false
+		}
+
+		 if (str.indexOf(at,(lat+1))!=-1){
+		    alert("Invalid E-mail ID")
+		    return false
+		 }
+
+		 if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+		    alert("Invalid E-mail ID")
+		    return false
+		 }
+
+		 if (str.indexOf(dot,(lat+2))==-1){
+		    alert("Invalid E-mail ID")
+		    return false
+		 }
+		
+		 if (str.indexOf(" ")!=-1){
+		    alert("Invalid E-mail ID")
+		    return false
+		 }
+
+ 		 return true					
+	}
+
+function ValidateForm(){
+	var emailID=document.frmSample.txtEmail
+	
+	if ((emailID.value==null)||(emailID.value=="")){
+		alert("Please Enter your Email ID")
+		emailID.focus()
+		return false
+	}
+	if (echeck(emailID.value)==false){
+		emailID.value=""
+		emailID.focus()
+		return false
+	}
+	return true
+ }
+
+
+
+    
+    
+//function isAlphabet(elem, helperMsg){
+  var alphaExp = /^[a-zA-Z][a-zA-Z ]+$/;
+  if(!vname.value.match(alphaExp)){
+   // return true;
+ // }
+  //else{
+    alert("Please enter only letters for Name");
+    vname.focus();
+    return false;
+  }
+//}         
+
+
+    
+      var uInput = cnct.value;
+  if(uInput.length < 11 || uInput.length > 11){
+  //  return true;
+ // }else{
+    alert("Please enter a  phone number");
+    cnct.focus();
+    return false;
+  }
+  
+  
+          
+
+
+  var numericExpression = /^[0-9]+$/;
+  if(!cnct.value.match(numericExpression)){
+     alert("Please enter a valid phone number");
+    cnct.focus();
+    return false;
+    }       
+
+
+//{
+if (x==null || x==""){
+    alert("Please Enter Your Address");
+ // }
+ // else{
+    return false;
+    }
+//}   
+    
+}
+
+
+</script> 
+
+
+</head>
+<body>
+<div>
+	<div id="header-wrapper">
+				<header class="container-fluid" id="site-header">
+					<div class="row">
+						<div class="12u">
+							<div id="logo">
+				<h1>MEDI-FRIEND</h1>
+							</div>
+							
+								<ul>
+									<li class="current_page_item"><a href="index.html">HOMEPAGE</a></li>
+									
+								</ul>
+							
+						</div>
+					</div>
+				</header>
+			</div>
+			</div>
+			<br>
+<div class="row-fluid">
+ <div class="container">
+   <div class="well">    
+   <?php if($_POST): ?>
+   	<?php print $output; ?>
+   <?php else: ?>
+      <form id="register" name="register" onsubmit="return validateForm()" class="form-horizontal" method="post" action="">
+		    <legend>CSC Info</legend>
+
+		     div class="control-group">
+	     <label class="control-label">E-mail</label>
+			 <div class="controls">
+			    <div class="input-prepend">
+				    <span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-medium" id="mail-id" name="mail-id" placeholder="-mail" required="true">
+				</div>
+			</div>
+		</div>
+		
+		     <div class="control-group">
+	     <label class="control-label">Kiosk's Name</label>
+			 <div class="controls">
+			    <div class="input-prepend">
+				    <span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-medium" id="name" name="name" placeholder="Kiosk's Name" required="true">
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+	        <label class="control-label">Address</label>
+			<div class="controls">
+			    <div class="input-prepend">
+				<span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-medium" id="address" name="address" placeholder="Kiosk's Address" required="true">
+     
+				</div>
+			</div>
+		</div>
+		<div class="control-group ">
+	        <label class="control-label">CSC Contact details</label>
+			<div class="controls">
+			    <div class="input-prepend">
+				<span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-small" id="ph_no." name="ph_no." placeholder="Contact Number" required="true">
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+		<label class="control-label" for="input01"></label>
+	      <div class="controls">
+	       <button type="submit" class="btn btn-success" rel="tooltip" title="first tooltip">Submit</button>
+	       
+	      </div>
+	
+	</div>
+	
+	  </form>
+<?php endif; ?>
+   </div>
+</div>  
+    </div>
+         
+</body>
+
+
+</html>
+
